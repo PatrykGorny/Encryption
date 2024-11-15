@@ -121,8 +121,9 @@ def on_button_cipher_cezar():
                 raise ValueError("Klucz musi być w zakresie od 1 do 34.")
             encrypted = cipher_cezara(text, key)
             if text != "":
-                result_label = Label(frame_encrypt, text=f"Zaszyfrowany tekst: {encrypted}", bg="green")
+                result_label = Label(frame_encrypt, text=f"Zaszyfrowany tekst: {encrypted}", bg="green",cursor="hand2")
                 result_label.grid(row=4, column=0, columnspan=5, pady=10)
+                result_label.bind("<Button-1>", lambda e: copy_to_clipboard(encrypted))
             else:
                 error_label = Label(frame_encrypt, text="Błąd: Wprowadź dane.", bg="red")
                 error_label.grid(row=4, column=0, columnspan=5, pady=10)
@@ -272,6 +273,8 @@ def on_button_cipher_polibiusz():
         encrypted_text = encrypt_polibiusz(cesar_text, table)
         result_label = Label(frame_encrypt, text=f"Zaszyfrowany tekst: {encrypted_text}", bg="green")
         result_label.grid(row=4, column=0, columnspan=5, pady=10)
+        result_label.bind("<Button-1>", lambda e: copy_to_clipboard(encrypted_text))
+
     button_cipher = tk.Button(frame_encrypt, text="Szyfruj", command=encrypt, width=25, bg="lightblue")
     button_cipher.grid(row=8, column=1, columnspan=3, pady=10)
     def decipher():
@@ -291,6 +294,7 @@ def on_button_cipher_polibiusz():
         decrypted_text = decipher_cezara(decrypted_cypher_text, key)
         result_label=Label(frame_encrypt,text=f"Odszyfrowany tekst: {decrypted_text}",bg="green")
         result_label.grid(row=14,column=0,columnspan=3, pady=10)
+
 
     button_decrypt = tk.Button(frame_encrypt, text="Deszyfruj", command=decipher, width=25, bg="lightblue")
     button_decrypt.grid(row=15, column=1, columnspan=3, pady=10)
@@ -351,6 +355,7 @@ def on_button_cipher_vigenere():
         encrypt_text = encrypt_vigenere(text,key)
         result_label = Label(frame_encrypt, text=f"Zaszyfrowany tekst: {encrypt_text}", bg="green")
         result_label.grid(row=4, column=0, columnspan=5, pady=10)
+        result_label.bind("<Button-1>", lambda e: copy_to_clipboard(encrypt_text))
 
     button_encrypt = tk.Button(frame_encrypt, text="Szyfruj", command=encrypt, width=25, bg="lightblue")
     button_encrypt.grid(row=5, column=1, columnspan=5, pady=10)
@@ -516,6 +521,7 @@ def on_button_fairplay():
 
         result_label = tk.Label(frame_encrypt, text=f"Zaszyfrowany tekst: {encrypt_text}", bg="green")
         result_label.grid(row=4, column=0, columnspan=5, pady=10)
+        result_label.bind("<Button-1>", lambda e: copy_to_clipboard(encrypt_text))
 
     button_encrypt = tk.Button(frame_encrypt, text="Szyfruj", command=encrypt, width=25, bg="lightblue")
     button_encrypt.grid(row=5, column=1, columnspan=5, pady=10)
@@ -598,7 +604,7 @@ def copy_to_clipboard(text):
     root.clipboard_append(text)
     root.update()
 
-    result_label.config(text="Tekst skopiowany do schowka!", bg="yellow")
+    result_label.config(text="Zaszyfrowany tekst został skopiowany!", bg="yellow")
 
 
     root.after(1000, lambda: result_label.config(text=original_text, bg=original_bg))
