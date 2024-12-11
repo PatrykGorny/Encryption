@@ -478,9 +478,9 @@ def playfair_decrypt(ciphertext, key):
         plaintext += decrypt_digraph(digraph, matrix)
 
     return plaintext
-def on_button_fairplay():
+def on_button_playfair():
     global result_label
-    label_cipher.config(text="Szyfr FairPlay")
+    label_cipher.config(text="Szyfr PlayFair")
     hides_buttons(cipher_buttons)
 
     label_input_cipher = tk.Label(frame_encrypt, text="Wprowadź tekst do zaszyfrowania:", bg="black", fg="white")
@@ -710,25 +710,25 @@ total_rows = 50
 for row in range(total_rows):
     frame_encrypt.grid_rowconfigure(row, weight=1)
 
-button_cezar = Button(frame_encrypt, text="Szyfr Cezara", command=on_button_cipher_cezar, width=15,bg="darkgray",fg="black")
-button_cezar.grid(row=20, column=0, padx=20, pady=10, sticky="ew")
-cipher_buttons.append(button_cezar)
+buttons_data = [
+    {"text": "Szyfr Cezara", "command": on_button_cipher_cezar},
+    {"text": "Szyfr Polibiusza", "command": on_button_cipher_polibiusz},
+    {"text": "Szyfr Vigenère’a", "command": on_button_cipher_vigenere},
+    {"text": "Szyfr PlayFair", "command": on_button_playfair},
+    {"text": "Szyfr RSA", "command": on_button_RSA}
+]
 
-button_polibiusz = Button(frame_encrypt, text="Szyfr Polibiusza ", command=on_button_cipher_polibiusz, width=15,bg="darkgray",fg="black")
-button_polibiusz.grid(row=20, column=1, padx=10, pady=10, sticky="ew")
-cipher_buttons.append(button_polibiusz)
-
-button = Button(frame_encrypt, text="Szyfr Vigenère’a", command=on_button_cipher_vigenere, width=15,bg="darkgray",fg="black")
-button.grid(row=20, column=2, padx=20, pady=10, sticky="ew")
-cipher_buttons.append(button)
-
-button = Button(frame_encrypt, text="Szyfr FairPlay", command=on_button_fairplay, width=15,bg="darkgray",fg="black")
-button.grid(row=20, column=3, padx=20, pady=10, sticky="ew")
-cipher_buttons.append(button)
-
-button = Button(frame_encrypt, text="Szyfr RSA", command=on_button_RSA, width=15,bg="darkgray",fg="black")
-button.grid(row=20, column=4, padx=20, pady=10, sticky="ew")
-cipher_buttons.append(button)
+for idx, button_info in enumerate(buttons_data):
+    button = Button(
+        frame_encrypt,
+        text=button_info["text"],
+        command=button_info["command"],
+        width=15,
+        bg="darkgray",
+        fg="black"
+    )
+    button.grid(row=20, column=idx, padx=20, pady=10, sticky="ew")
+    cipher_buttons.append(button)
 
 for i in range(5):
     frame_encrypt.grid_columnconfigure(i, weight=2)
