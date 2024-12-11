@@ -328,7 +328,7 @@ def decrypt_vigenere(ciphertext, key):
     return ''.join(plaintext)
 def on_button_cipher_vigenere():
     global result_label, error_label, table
-    label_cipher.config(text="Szyfr FairPlay")
+    label_cipher.config(text="Szyfr Vigenère’a")
     hides_buttons(cipher_buttons)
     label_input_cipher = Label(frame_encrypt, text="Wprowadź tekst do zaszyfrowania:", bg="black", fg="white")
     label_input_cipher.grid(row=2, column=0, padx=5, pady=5, sticky="w")
@@ -393,18 +393,15 @@ def generate_matrix(key):
     matrix = []
     added_letters = set()
 
-    # Dodajemy litery z klucza do macierzy, upewniając się, że są w alfabecie
     for letter in key.lower():
         if letter not in added_letters and letter in polish_alphabet:
             matrix.append(letter)
             added_letters.add(letter)
 
-    # Dodajemy resztę liter z polskiego alfabetu, jeśli nie zostały dodane
     for letter in polish_alphabet:
         if letter not in added_letters:
             matrix.append(letter)
 
-    # Zwracamy macierz o szerokości 5
     return [matrix[i:i + 5] for i in range(0, len(matrix), 5)]
 def create_digraphs(text):
     text = text.lower().replace(" ", "")
@@ -573,7 +570,7 @@ def int_to_text(number):
     number_str = str(number)
     text = ''.join(chr(int(number_str[i:i+5])) for i in range(0, len(number_str), 5))
     return text
-def czy_pierwsza(n):
+def first(n):
     if n <= 1:
         return False
     for i in range(2, int(n**0.5) + 1):
@@ -628,10 +625,10 @@ def on_button_RSA():
             messagebox.showerror("Błąd", "Podaj poprawne liczby pierwsze")
             return
 
-        if not czy_pierwsza(key_p):
+        if not first(key_p):
             messagebox.showerror("Błąd", "Podaj liczbę pierwszą dla p")
             return
-        elif not czy_pierwsza(key_q):
+        elif not first(key_q):
             messagebox.showerror("Błąd", "Podaj liczbę pierwszą dla q")
             return
 
