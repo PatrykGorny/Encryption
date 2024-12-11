@@ -314,7 +314,6 @@ def encrypt_vigenere(plaintext, key):
         ciphertext.append(polish_alphabet[value])
 
     return ''.join(ciphertext)
-
 def decrypt_vigenere(ciphertext, key):
     plaintext = []
     key_length = len(key)
@@ -390,7 +389,6 @@ def on_button_cipher_vigenere():
     global button_back
     button_back = tk.Button(frame_encrypt, text="Powrót do Menu",command=encryption_menu, width=25, bg="lightgreen")
     button_back.grid(row=10, column=0, columnspan=5, pady=10)
-
 def generate_matrix(key):
     matrix = []
     added_letters = set()
@@ -408,7 +406,6 @@ def generate_matrix(key):
 
     # Zwracamy macierz o szerokości 5
     return [matrix[i:i + 5] for i in range(0, len(matrix), 5)]
-
 def create_digraphs(text):
     text = text.lower().replace(" ", "")
     text = ''.join([char for char in text if char in polish_alphabet])
@@ -429,14 +426,12 @@ def create_digraphs(text):
             digraphs.append((letter1, 'x'))
             i += 1
     return digraphs
-
 def find_position(letter, matrix):
     for row in range(len(matrix)):
         for col in range(len(matrix[0])):
             if matrix[row][col] == letter:
                 return row, col
     raise ValueError(f"Letter '{letter}' not found in matrix")
-
 def encrypt_digraph(digraph, matrix):
     row1, col1 = find_position(digraph[0], matrix)
     row2, col2 = find_position(digraph[1], matrix)
@@ -465,7 +460,6 @@ def decrypt_digraph(digraph, matrix):
         col1, col2 = col2, col1
 
     return matrix[row1][col1] + matrix[row2][col2]
-
 def playfair_encrypt(text, key):
     matrix = generate_matrix(key)
     digraphs = create_digraphs(text)
@@ -475,8 +469,6 @@ def playfair_encrypt(text, key):
         ciphertext += encrypt_digraph(digraph, matrix)
 
     return ciphertext
-
-
 def playfair_decrypt(ciphertext, key):
     matrix = generate_matrix(key)
     digraphs = create_digraphs(ciphertext)
@@ -486,7 +478,6 @@ def playfair_decrypt(ciphertext, key):
         plaintext += decrypt_digraph(digraph, matrix)
 
     return plaintext
-
 def on_button_fairplay():
     global result_label
     label_cipher.config(text="Szyfr FairPlay")
@@ -558,12 +549,10 @@ def on_button_fairplay():
 
     button_back = tk.Button(frame_encrypt, text="Powrót do Menu", command=encryption_menu, width=25, bg="lightgreen")
     button_back.grid(row=10, column=0, columnspan=5, pady=10)
-
 def gcd(a, b):
     while b:
         a, b = b, a % b
     return a
-
 def find_e(phi):
     e = 2
     while e < phi:
@@ -571,17 +560,14 @@ def find_e(phi):
             return e
         e += 1
     raise ValueError("Nie znaleziono odpowiedniego e.")
-
 def modinv(a, m):
     for x in range(1, m):
         if (a * x) % m == 1:
             return x
     raise ValueError("Nie znaleziono odwrotności modularnej.")
-
 def text_to_int(text):
 
     return int(''.join(f"{ord(c):05}" for c in text))
-
 def int_to_text(number):
 
     number_str = str(number)
@@ -594,8 +580,6 @@ def czy_pierwsza(n):
         if n % i == 0:
             return False
     return True
-
-
 def copy_to_clipboard(text):
     original_text = result_label.cget("text")
     original_bg = result_label.cget("bg")
@@ -608,8 +592,6 @@ def copy_to_clipboard(text):
 
 
     root.after(1000, lambda: result_label.config(text=original_text, bg=original_bg))
-
-
 def on_button_RSA():
     global result_label
     label_cipher.config(text="Szyfr RSA")
@@ -723,8 +705,6 @@ def on_button_RSA():
 
     button_back = tk.Button(frame_encrypt, text="Powrót do Menu", command=encryption_menu, width=25, bg="lightgreen")
     button_back.grid(row=14, column=0, columnspan=5, pady=10)
-
-
 #Menu
 total_rows = 50
 for row in range(total_rows):
